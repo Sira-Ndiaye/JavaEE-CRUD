@@ -1,0 +1,53 @@
+package dao;
+
+import java.util.ArrayList;
+
+import beans.Utilisateur;
+
+public class UtilisateurDAO {
+	private static final ArrayList<Utilisateur> users = new ArrayList<Utilisateur>();
+	
+	
+	private static int lastId=0;
+	
+	public static void addUser(Utilisateur u) {
+		u.setId(lastId++);
+		users.add(u);
+	}
+	
+	public static ArrayList<Utilisateur> listUsers () {
+		return users;
+	}
+	
+	public static void remove (int id) {
+		for(Utilisateur user : users) {
+			if(user.getId() == id) {
+				users.remove(user);
+				break;
+			}
+		}
+	}
+	
+	public static void update (int id,Utilisateur modifiedUser) {
+		for(Utilisateur user : users) {
+			if(user.getId() == id) {
+				users.set(id, modifiedUser);
+				break;
+			}
+		}
+	}
+	
+	public static Utilisateur findUser (int id) {
+		for(Utilisateur user : users) {
+			if(user.getId() == id) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	/*public static void initialisation() {
+		Utilisateur u1 = new Utilisateur("Sira","Ndiaye","bondit","passer");
+		addUser(u1);
+	}*/
+}
