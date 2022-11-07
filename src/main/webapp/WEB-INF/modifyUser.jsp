@@ -26,26 +26,26 @@
 	%>		
 		
 		<form method="post" class="mt-5">
-			<input type="text" style="display:none;" value="<%=user.getId() %>" name="id" id="id"/>
+			<input type="text" style="display:none;" value="${user.id }" name="id" id="id"/>
 		
 		  <div class="form-group">
 		  	<label for="prenom">Prenom : </label>
-			<input type="text" value="<%=user.getPrenom() %>" class="form-control" name="prenom" id="prenom"/>
+			<input type="text" value="${ user.prenom }" class="form-control" name="prenom" id="prenom"/>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="nom">Nom: </label>
-			<input type="text" value="<%=user.getNom() %>" class="form-control" name="nom" id="nom"/>
+			<input type="text" value="${user.nom }" class="form-control" name="nom" id="nom"/>
 		  </div>
 		  
   		  <div class="form-group">
 		    <label for="username"> Username: </label>
-			<input type="text" value="<%=user.getUsername() %>" class="form-control" name="username" id="username"/>
+			<input type="text" value="${ user.username }" class="form-control" name="username" id="username"/>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="password">Password:</label>
-		    <input type="text" value="<%=user.getPassword() %>" class="form-control" name="password" id="password">
+		    <input type="text" value="${ user.password }" class="form-control" name="password" id="password">
 		  </div>
 		  
 		  <button type="submit" class="btn btn-primary">VALIDER</button>

@@ -38,6 +38,13 @@
 		  <button type="submit" class="btn btn-primary">VALIDER</button>
 		  
 		</form>
+		<%
+			if(request.getAttribute("pass")!=null){
+		%>
+				<p class="text-danger mt-3">Remplissez au moins votre Nom et Prenom</p>
+		<%	
+			}
+		%>
 	
 	</div>
 </body>

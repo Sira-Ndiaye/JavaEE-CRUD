@@ -28,10 +28,13 @@ public class UtilisateurDAO {
 		}
 	}
 	
+	// TODO:HANDLE ERROR WHEN PREVIOUSLY DELETED USER
 	public static void update (int id,Utilisateur modifiedUser) {
-		for(Utilisateur user : users) {
-			if(user.getId() == id) {
-				users.set(id, modifiedUser);
+		
+		for (int i = 0; i < users.size(); i++) {
+			if(users.get(i).getId() == id) {
+				modifiedUser.setId(id);
+				users.set(i, modifiedUser);
 				break;
 			}
 		}

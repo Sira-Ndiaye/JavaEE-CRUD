@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -36,15 +37,23 @@ public class AddUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		PrintWriter out = response.getWriter();
+		
 		String prenom = request.getParameter("prenom");
 		String nom = request.getParameter("nom");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		Utilisateur lambda = new Utilisateur(nom,prenom,username,password);
-		UtilisateurDAO.addUser(lambda);
+		if(prenom.isEmpty() || nom.isEmpty()) {
+			request.setAttribute("pass",false);
+			request.getServletContext().getRequestDispatcher(VUE_ADD_USERS).forward(request, response);
+		}else {
+			Utilisateur lambda = new Utilisateur(nom,prenom,username,password);
+			UtilisateurDAO.addUser(lambda);
+			
+			response.sendRedirect("Liste");
+		}
 		
-		response.sendRedirect("Liste");
 		
 
 	}

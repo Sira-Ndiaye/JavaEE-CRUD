@@ -1,3 +1,4 @@
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="beans.Utilisateur, java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=ISO-8859-1" %>
 <%
@@ -37,16 +38,19 @@
 						</thead>
 						<tbody>
 						<%
-						for (Utilisateur user : users)
-						{%>
+						
+						for (Utilisateur user : users){
+							request.setAttribute("user", user);
+							
+						%>
 							<tr>
-								<td><%= user.getId() %></td>
-								<td><%= user.getPrenom() %></td>
-								<td><%= user.getNom() %></td>
-								<td><%= user.getUsername() %></td>
-								<td><%= user.getPassword() %></td>
-								<td><a href="<%= APP_ROOT %>/update?id=<%= user.getId() %>">Modifier</a></td>
-								<td><a href="<%= APP_ROOT %>/delete?id=<%= user.getId() %>" onclick="return confirmSuppression()">Supprimer</a></td>
+								<td>${user.id }</td>
+								<td>${user.prenom }</td>
+								<td>${user.nom }</td>
+								<td>${user.username }</td>
+								<td>${user.password }</td>
+								<td><a href="<%= APP_ROOT %>/update?id=${user.id}">Modifier</a></td>
+								<td><a href="<%= APP_ROOT %>/delete?id=${user.id}" onclick="return confirmSuppression()">Supprimer</a></td>
 							</tr><%
 						}%>
 						</tbody>
