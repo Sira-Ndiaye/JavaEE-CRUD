@@ -1,5 +1,5 @@
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="beans.Utilisateur, java.util.ArrayList"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=ISO-8859-1" %>
 <%
 	final String APP_ROOT = request.getContextPath();
@@ -18,13 +18,11 @@
 	<div class="container mt-3">
 		<h1 id="titre-principal">Liste des utilisateurs</h1>
 		<div class="my-5">
-			<%
-				if(users.isEmpty())
-				{%>
-					<p>La liste des utilisateurs est pour le moment vide !</p><%
-				}
-				else
-				{%>
+			<c:choose>
+				<c:when test="${empty requestScope.users }">
+					<p>La liste des utilisateurs est pour le moment vide !</p>
+				</c:when>
+				<c:otherwise>
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
@@ -37,27 +35,22 @@
 							</tr>
 						</thead>
 						<tbody>
-						<%
-						
-						for (Utilisateur user : users){
-							request.setAttribute("user", user);
-							
-						%>
-							<tr>
-								<td>${user.id }</td>
-								<td>${user.prenom }</td>
-								<td>${user.nom }</td>
-								<td>${user.username }</td>
-								<td>${user.password }</td>
-								<td><a href="<%= APP_ROOT %>/update?id=${user.id}">Modifier</a></td>
-								<td><a href="<%= APP_ROOT %>/delete?id=${user.id}" onclick="return confirmSuppression()">Supprimer</a></td>
-							</tr><%
-						}%>
+							<c:forEach items="${users}" var="user">
+								<tr>
+									<td>${user.id }</td>
+									<td>${user.prenom }</td>
+									<td>${user.nom }</td>
+									<td>${user.username }</td>
+									<td>${user.password }</td>
+									<td><a href="<c:url value='/update?id=${user.id}'/>">Modifier</a></td>
+									<td><a href="<c:url value='/delete?id=${user.id}'/>" onclick="return confirmSuppression()">Supprimer</a></td>
+								</tr>
+							</c:forEach>
 						</tbody>
-					</table>
-					<%
-				}
-			%>
+						</table>
+						
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="small" id="pied">Copyright Sira Ndiaye &copy; November 2022</div>
 	</div>

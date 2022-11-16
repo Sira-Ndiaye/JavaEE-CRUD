@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Utilisateur;
 import dao.UtilisateurDAO;
+import forms.AddUserForm;
 
 /**
  * Servlet implementation class AddUser
@@ -37,22 +39,21 @@ public class AddUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PrintWriter out = response.getWriter();
-		
-		String prenom = request.getParameter("prenom");
-		String nom = request.getParameter("nom");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		if(prenom.isEmpty() || nom.isEmpty()) {
-			request.setAttribute("pass",false);
-			request.getServletContext().getRequestDispatcher(VUE_ADD_USERS).forward(request, response);
-		}else {
-			Utilisateur lambda = new Utilisateur(nom,prenom,username,password);
-			UtilisateurDAO.addUser(lambda);
-			
+		AddUserForm form = new AddUserForm(request);
+		if(form.ajouter()) {
 			response.sendRedirect("Liste");
+		}else {
+		request.setAttribute("form", form);
+		request.setAttribute("user", form.getUser());
+		request.setAttribute("status", form.getStatus());
+		request.setAttribute("statusMessage", form.getStatusMessage());
+		request.setAttribute("erreurs", form.getErreurs());
+		
+		
+			request.getServletContext().getRequestDispatcher(VUE_ADD_USERS).forward(request, response);
+		
 		}
+			
 		
 		
 

@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import beans.Utilisateur;
 
 public class UtilisateurDAO {
+	
 	private static final ArrayList<Utilisateur> users = new ArrayList<Utilisateur>();
+	private static int lastId=1;
+	static {
+		users.add(new Utilisateur("admin","admin","admin","admin"));
+	}
 	
-	
-	private static int lastId=0;
 	
 	public static void addUser(Utilisateur u) {
 		u.setId(lastId++);
@@ -49,8 +52,22 @@ public class UtilisateurDAO {
 		return null;
 	}
 	
-	/*public static void initialisation() {
-		Utilisateur u1 = new Utilisateur("Sira","Ndiaye","bondit","passer");
-		addUser(u1);
-	}*/
+	
+	public static Utilisateur findUser (String username) {
+		for(Utilisateur user : users) {
+			if(user.getUsername().equals(username)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	public static Utilisateur login (String username, String password) {
+		for(Utilisateur user : users) {
+			if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
 }
