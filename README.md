@@ -1,4 +1,4 @@
-# CURD WITH JAVA EE (JAKARTA EE)
+# CRUD WITH JAVA EE (JAKARTA EE)
 
 
 ## What is this project for? 
