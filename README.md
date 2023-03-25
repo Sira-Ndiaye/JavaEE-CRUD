@@ -7,7 +7,7 @@ This project allows to do simple CRUD (Create Read Update Delete) operations wit
 
 ## Status
 
-#####Version 1.0 : Without a database
+- Version 1.0 : Without a database.  
 Obviously, some usage are depreciated. Even JAVA EE has been renamed to JAKARTA EE
 
 #####Version 2.0 : UPDATED TO A VERSION WITH A DATABASE
