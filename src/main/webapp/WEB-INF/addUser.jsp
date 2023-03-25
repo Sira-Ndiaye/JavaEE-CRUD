@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%
 	final String APP_ROOT = request.getContextPath();
 %>
@@ -65,7 +66,6 @@
 					    />
 				    	<span class='mt-2 mb-5 text-danger'>${erreurs.password }</span>
 					  </div>
-					  <span class='mt-2 mb-5 text-danger'>${erreurs.password }</span>
 					  
 					  <div class="form-group my-3">
 					    <label for="passwordbis">Password - Confirmation:</label>

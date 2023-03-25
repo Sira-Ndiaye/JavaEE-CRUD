@@ -7,13 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import beans.Utilisateur;
-import dao.UtilisateurDAO;
+import dao.DaoMysqlImpl;
 
-public class LoginForm {
+public class LoginForm extends Utilities {
 	
 	private HttpServletRequest req;
 	
 	private Utilisateur user;
+	private Map<String,String> erreurs;
+
+	private DaoMysqlImpl mysqlImpl = new DaoMysqlImpl();
 	
 	private static final String CHAMP_USERNAME = "username";
 	private static final String CHAMP_PASSWORD = "password";
@@ -26,34 +29,38 @@ public class LoginForm {
 	
 	
 	public LoginForm(HttpServletRequest request) {
+		super(request);
 		this.req = request;
+		this.erreurs = new HashMap<String, String>();
 	}
 	
 	public boolean login() {
 		String username = getParameter(CHAMP_USERNAME);
 		String password = getParameter(CHAMP_PASSWORD);
 		status = false;
-		user = UtilisateurDAO.findUser(username);
-		if(user != null) {
-			if(user.getPassword().equals(password)) {
-				HttpSession session = req.getSession();
-				session.setAttribute("isConnected",true);
-				status=true;
-			}else {
-				statusMessage=INVALIDE_PASSWORD_ERROR_MESSAGE;
+		validerChamps(erreurs,CHAMP_USERNAME,CHAMP_PASSWORD);
+
+		if(erreurs.isEmpty()) {
+			user = mysqlImpl.findUser(username);
+			if(user != null) {
+				if(user.getPassword().equals(password)) {
+					HttpSession session = req.getSession();
+					session.setAttribute("isConnected",true);
+					status=true;
+				}else {
+					statusMessage=INVALIDE_PASSWORD_ERROR_MESSAGE;
+				}
+			}else{
+				statusMessage=INEXISTANT_USER;
 			}
-		}else{
-			statusMessage=INEXISTANT_USER;
+		}else {
+			status = false;
+			statusMessage= "Echec!!";
 		}
+		
 		
 		return status;
 		
-	}
-	
-	
-	private String getParameter(String params) {
-		String valeur = this.req.getParameter(params);
-		return (valeur ==null || valeur.trim().isEmpty()) ? null : valeur.trim();
 	}
 	
 

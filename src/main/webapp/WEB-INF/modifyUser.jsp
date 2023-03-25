@@ -32,21 +32,25 @@
 						  <div class="form-group my-3">
 						  	<label for="prenom">Prenom : </label>
 							<input type="text" value="${ user.prenom }" class="form-control" name="prenom" id="prenom"/>
+						  	<span class='d-inline mt-2 mb-5 text-danger'>${erreurs.prenom }</span>
 						  </div>
 						  
 						  <div class="form-group my-3">
 						    <label for="nom">Nom: </label>
 							<input type="text" value="${user.nom }" class="form-control" name="nom" id="nom"/>
+							<span class='d-inline mt-2 mb-5 text-danger'>${erreurs.nom }</span>
 						  </div>
 						  
 				  		  <div class="form-group my-3">
 						    <label for="username"> Username: </label>
 							<input type="text" value="${ user.username }" class="form-control" name="username" id="username"/>
+						  	<span class='d-inline mt-2 mb-5 text-danger'>${erreurs.username }</span>
 						  </div>
 						  
 						  <div class="form-group my-3">
 						    <label for="password">Password:</label>
 						    <input type="text" value="${ user.password }" class="form-control" name="password" id="password">
+						  	<span class='d-inline mt-2 mb-5 text-danger'>${erreurs.password }</span>
 						  </div>
 						  
 						  <button type="submit" class="btn btn-primary">VALIDER</button>

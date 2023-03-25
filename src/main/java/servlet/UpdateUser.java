@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Utilisateur;
 import dao.UtilisateurDAO;
+import dao.DaoMysqlImpl;
+import forms.ModifyUserForm;
 
 /**
  * Servlet implementation class UpdateUser
@@ -18,8 +18,7 @@ import dao.UtilisateurDAO;
 @WebServlet("/update")
 public class UpdateUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private static final String VUE_USERS = "/WEB-INF/liste.jsp";
+	private DaoMysqlImpl mysqlImpl = new DaoMysqlImpl(); 
 	private static final String VUE_MODIFY_USER = "/WEB-INF/modifyUser.jsp";
 
 	@Override
@@ -27,8 +26,7 @@ public class UpdateUser extends HttpServlet {
 		
 		int id = Integer.valueOf(req.getParameter("id"));
 
-		
-		req.setAttribute("user", UtilisateurDAO.findUser(id));
+		req.setAttribute("user", mysqlImpl.findUser(id));
 		
 		getServletContext().getRequestDispatcher(VUE_MODIFY_USER).forward(req, resp);
 	}
@@ -37,21 +35,21 @@ public class UpdateUser extends HttpServlet {
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			
 			int id =  Integer.valueOf(req.getParameter("id"));
-			System.out.print(id);
-			String prenom = req.getParameter("prenom");
-			String nom = req.getParameter("nom");
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
+			ModifyUserForm form = new ModifyUserForm(req);
+			if(form.modifier(id)) {
+				resp.sendRedirect("Liste");
+			}else {
+			req.setAttribute("form", form);
+			req.setAttribute("user", form.getUser());
+			req.setAttribute("status", form.getStatus());
+			req.setAttribute("statusMessage", form.getStatusMessage());
+			req.setAttribute("erreurs", form.getErreurs());
 			
-			Utilisateur lambda = new Utilisateur(nom,prenom,username,password);
-			UtilisateurDAO.update(id,lambda);
 			
-			resp.sendRedirect("Liste");
+				req.getServletContext().getRequestDispatcher(VUE_MODIFY_USER).forward(req, resp);
+			
+			}
 		}
 
-	private String getParameter(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

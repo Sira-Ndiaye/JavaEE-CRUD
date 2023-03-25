@@ -22,7 +22,6 @@ import forms.LoginForm;
 public class Auth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String VUE_CONN = "/WEB-INF/connect.jsp";
-	private static final String VUE_USERS = "/Liste";
 
     /**
      * @see HttpServlet#HttpServlet()
